@@ -7,11 +7,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import com.example.demo.server.UserServiceDetail;
+
 @Configuration
 @EnableWebSecurity
 //通过@EnableWebSecurity注解开启Spring Security的功能
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	
+	@Autowired
+	private UserServiceDetail userServiceDetail;
 	
 	/**
 	 * authorizeRequests()定义哪些URL需要被保护、哪些不需要被保护。
@@ -31,12 +36,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
                 .permitAll();
     }
-
+    
+    //身份验证管理生成器
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+    	
+    	auth.userDetailsService(userServiceDetail);
     }
 
 }
