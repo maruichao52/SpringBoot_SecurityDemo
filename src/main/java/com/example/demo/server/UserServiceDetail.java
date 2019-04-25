@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,8 @@ import lombok.extern.slf4j.Slf4j;
  * @author 马瑞朝
  *
  */
+
+
 @Component
 @Slf4j
 public class UserServiceDetail implements UserDetailsService {
@@ -50,20 +53,8 @@ public class UserServiceDetail implements UserDetailsService {
 		List<Role> role = roleRepository.findByUsername(name);
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		
-		role.forEach(role1 -> authorities.addAll(AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_"+role1.getRolename())));
+		role.forEach(role1 -> authorities.addAll(AuthorityUtils.commaSeparatedStringToAuthorityList(role1.getRolename())));
 		
 		return new org.springframework.security.core.userdetails.User(u.getUsername(),u.getPassword(),authorities);
 	}
-	
-	/***
-	 * 密码加密方式
-	 * 
-	 * @Author MRC
-	 * @Date 2019年4月24日 下午10:45:23
-	 * @return
-	 */
-	@Bean
-    public static PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

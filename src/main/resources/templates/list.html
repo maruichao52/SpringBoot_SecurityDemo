@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Hello World!</title>
+</head>
+<body>
+	<div sec:authorize="isAuthenticated()">
+		<!--sec:authorize属性会接受一个SpEL表达式  isAuthenticated() 只有用户已经进行认证了，才会渲染出内容。 -->
+		hello <span sec:authentication="name">someone</span> !
+	</div>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="注销" />
+	</form>
+
+	<div sec:authorize="hasRole('ADMIN')">会员admin可见</div>
+
+	<div sec:authorize="hasRole('BookAdd')">
+		会员admin\ADMIN1可见</div>
+
+	<span sec:authorize-url="/admin/center"> <a
+		th:href="@{/admin/center}">admin中心</a>
+	</span>
+</body>
+</html>

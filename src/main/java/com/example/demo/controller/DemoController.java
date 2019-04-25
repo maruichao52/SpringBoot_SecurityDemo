@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,5 +31,14 @@ public class DemoController {
     public String login() {
         return "login";
     }
+	
+	@RequestMapping("/list")
+	public String list() {
+		
+		return "list";
+		
+	}
+	
+	
 	
 }
