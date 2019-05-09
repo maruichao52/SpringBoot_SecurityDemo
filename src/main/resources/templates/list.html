@@ -14,11 +14,16 @@
 		<input type="submit" value="注销" />
 	</form>
 
-	<div sec:authorize="hasRole('ADMIN')">会员admin可见</div>
-
-	<div sec:authorize="hasRole('BookAdd')">
-		会员admin\ADMIN1可见</div>
-
+	<div sec:authorize="hasRole('ROLE_ADMIN')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
+            <p class="bg-info">ROLE_ADMIN</p>
+    </div>  
+	
+	<div sec:authorize="hasRole('ROLE_USER')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
+            <p class="bg-info">ROLE_USER</p>
+    </div>  
+	<div sec:authorize="hasRole('ROLE_TEST')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
+        
+    </div>
 	<span sec:authorize-url="/admin/center"> <a
 		th:href="@{/admin/center}">admin中心</a>
 	</span>
